@@ -1,9 +1,8 @@
-import React from 'react'
+import { useSelector } from "react-redux";
+import { Outlet, Navigate } from "react-router-dom";
 
 function Profile() {
-  return (
-    <div>Profile</div>
-  )
+  return <div>profile</div>
 }
 
-export default Profile
+export default Profile;
