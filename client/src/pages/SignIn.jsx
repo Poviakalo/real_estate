@@ -6,7 +6,7 @@ import OAuth from "../components/OAuth";
 
 function SignIn() {
   const [formData, setFormData] = useState({});
-  const { loading, error } = useSelector(state => state.user)
+  const { loading, error } = useSelector(state => state.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
