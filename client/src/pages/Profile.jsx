@@ -16,6 +16,9 @@ import {
   deleteUserStart,
   deleteUserSuccess,
   deleteUserFailure,
+  signOutUserStart,
+  signOutUserSuccess,
+  signOutUserFailure,
 } from "../redux/user/userSlice.js";
 
 function Profile() {
@@ -105,7 +108,7 @@ function Profile() {
 
     try {
       const res = await fetch(`/api/user/delete/${currentUser._id}`, {
-        method: 'DELETE',
+        method: "DELETE",
       });
 
       const data = await res.json();
@@ -117,9 +120,27 @@ function Profile() {
       }
 
       dispatch(deleteUserSuccess(data));
-      
     } catch (error) {
       dispatch(deleteUserFailure(error.message));
+    }
+  };
+
+  const handleSignOut = async () => {
+    dispatch(signOutUserStart());
+
+    try {
+      const res = await fetch('/api/auth/signout');
+      const data = await res.json();
+
+      if (data.success === false) {
+        dispatch(signOutUserFailure(data.message));
+
+        return;
+      }
+
+      dispatch(signOutUserSuccess(data));
+    } catch (error) {
+      dispatch(signOutUserFailure(error.message))
     }
   }
 
@@ -197,13 +218,22 @@ function Profile() {
       </form>
 
       <div className="flex justify-between mt-5">
-        <span onClick={handleDeleteUser} className="text-red-700 cursor-pointer">Delete account</span>
+        <span
+          onClick={handleDeleteUser}
+          className="text-red-700 cursor-pointer"
+        >
+          Delete account
+        </span>
 
-        <span className="text-red-700 cursor-pointer">Sign out</span>
+        <span onClick={handleSignOut} className="text-red-700 cursor-pointer">
+          Sign out
+        </span>
       </div>
 
       {error && <p className="text-red-700 mt-5">{error}</p>}
-      {updateSuccess && <p className="text-green-700 mt-5">User is updated successfully!</p>}
+      {updateSuccess && (
+        <p className="text-green-700 mt-5">User is updated successfully!</p>
+      )}
     </div>
   );
 }
