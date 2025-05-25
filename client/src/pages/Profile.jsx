@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import {
   getDownloadURL,
   getStorage,
@@ -30,6 +31,7 @@ function Profile() {
   const [formData, setFormData] = useState({});
   const [updateSuccess, setUpdateSuccess] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   // firebase storage
   // allow read;
@@ -129,7 +131,7 @@ function Profile() {
     dispatch(signOutUserStart());
 
     try {
-      const res = await fetch('/api/auth/signout');
+      const res = await fetch("/api/auth/signout");
       const data = await res.json();
 
       if (data.success === false) {
@@ -140,9 +142,9 @@ function Profile() {
 
       dispatch(signOutUserSuccess(data));
     } catch (error) {
-      dispatch(signOutUserFailure(error.message))
+      dispatch(signOutUserFailure(error.message));
     }
-  }
+  };
 
   return (
     <div className="p-3 max-w-lg mx-auto bg">
@@ -210,12 +212,19 @@ function Profile() {
 
         <button
           type="submit"
-          className="bg-slate-700 text-white rounded-lg p-3 uppercase hover:opacity-95 disabled:opacity-80"
+          className="bg-slate-700 text-white rounded-lg p-3 uppercase hover:opacity-95 disabled:opacity-80 cursor-pointer"
           disabled={loading}
         >
           {loading ? "Loading..." : "Update"}
         </button>
       </form>
+
+      <button
+        onClick={() => navigate("/create-listing")}
+        className="bg-green-700 text-white rounded-lg p-3 uppercase hover:opacity-95 disabled:opacity-80 w-full mt-5 cursor-pointer"
+      >
+        Create listing
+      </button>
 
       <div className="flex justify-between mt-5">
         <span
