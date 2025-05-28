@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   getDownloadURL,
   getStorage,
@@ -217,14 +217,13 @@ function Profile() {
         >
           {loading ? "Loading..." : "Update"}
         </button>
+        <Link
+          to={"/create-listing"}
+          className="bg-green-700 text-white text-center rounded-lg p-3 uppercase hover:opacity-95 cursor-pointer"
+        >
+          Create listing
+        </Link>
       </form>
-
-      <button
-        onClick={() => navigate("/create-listing")}
-        className="bg-green-700 text-white rounded-lg p-3 uppercase hover:opacity-95 disabled:opacity-80 w-full mt-5 cursor-pointer"
-      >
-        Create listing
-      </button>
 
       <div className="flex justify-between mt-5">
         <span
