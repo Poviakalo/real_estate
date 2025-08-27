@@ -61,6 +61,8 @@ function Profile() {
       },
 
       (error) => {
+        console.log(error);
+        
         setFileUploadError(true);
       },
 
